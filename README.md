@@ -35,7 +35,7 @@ Prereq: Complete Initial Jenkins Setup & Maven Jenkins Setup
 3. Go to your owaspmaven project and select add a build step and then dependency check
 4. in the box for directories to scan type in ```/*java/*.jar```
 5. Select Add Post Build Options & 'publish dependency-check results'
-6.  In the dependency check results enter ```**/dependency-check-report.xml```
+6. In the dependency check results enter ```**/dependency-check-report.xml```
 
 ### Maven OWASP Zap Setup.
 Prereq: Complete initial jenkins setup & maven jenkins setup.
@@ -43,4 +43,4 @@ Prereq: Complete initial jenkins setup & maven jenkins setup.
 1.
 
 ### Owasp ZAP Standalone scan
-1. docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options "-config api.disablekey=true" http://localdev.owasp.com
+1. docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options "-config api.disablekey=true" http://exampe/url/to/hit
