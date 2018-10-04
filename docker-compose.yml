@@ -1,0 +1,41 @@
+# Run as: docker-compose.yml
+version: "3.4"
+networks:
+ owasp:
+   driver: bridge
+services:
+  # owaspzap:
+  #  container_name: owaspgui
+  #  command: zap-webswing.sh -host 0.0.0.0 -port 8091 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+  #  image: owasp/zap2docker-stable
+  #  ports:
+  #   - "8091:8091"
+  #  networks:
+  #    - owasp
+  #  user: zap
+  owaspzapapi:
+   container_name: owaspapi
+   command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+   image: owasp/zap2docker-stable
+   ports:
+    - "8090:8090"
+   networks:
+     - owasp
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    ports:
+     - "50000:50000"
+     - "8080:8080"
+    networks:
+      - owasp
+    depends_on:
+      - owaspzapapi
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:6.7.5
+    ports: 
+      - "9000:9000"
+      - "9092:9092"
+    networks:
+      - owasp
