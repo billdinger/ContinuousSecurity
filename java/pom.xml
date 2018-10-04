@@ -138,7 +138,7 @@
         <configuration>
             <cveValidForHours>24</cveValidForHours>
             <failBuildOnCVSS>4</failBuildOnCVSS>
-            <format>XML</format>
+            <format>HTML</format>
         </configuration>
         <executions>
             <execution>
