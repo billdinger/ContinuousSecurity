@@ -12,9 +12,21 @@
 
   <artifactId>projects</artifactId>
   <packaging>pom</packaging>
-
+<dependencies>
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-annotations</artifactId>
+  </dependency>
+</dependencies>
   <name>sub projects</name>
-
   <modules>
     <module>logging</module>
   </modules>
