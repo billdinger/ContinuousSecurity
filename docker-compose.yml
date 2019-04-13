@@ -33,7 +33,7 @@ services:
       - owaspzapapi
   sonarqube:
     container_name: sonarqube
-    image: sonarqube:6.7.5
+    image: sonarqube:lts
     ports: 
       - "9000:9000"
       - "9092:9092"

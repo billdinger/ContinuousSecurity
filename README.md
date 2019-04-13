@@ -1,46 +1,71 @@
 # ContinuousSecurity
 
-
+Describes how to setup a local docker environment to use jenkins & owasp tooling for the talk.
 
 ## Demos
 
-### Intial Jenkins Setup.
+1. Clone Repository
+2. Docker-Compose up in directory.
+
+## Jenkins Setup
+
+### Jenkins Initial Setup.
 
 1. Docker-Compose up from the source directory.
-2. Once it has finished starting, from another window run ```docker container exec -it $ID cat /var/jenkins_home/secrets/initialAdminPassword```
+2. Once it has finished starting, from another window run ```docker container exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword```
 3. Copy/Paste the admin password.
 4. Login to localhost:8080 using password above and accept defaults.
-5. Install OWASP Dependency Check Plugin
+4. Install recommended plugins.
+5. Setup admin username/password.
+6. Set to run on port:8080
 
-### Maven Jenkins Setup
-Prereq: Complete Initial Jenkins setup & start your docker containers.
+
+### Jenkins Maven Setup
+Prereq: Complete Initial Jenkins setup.
 
 1. ```docker exec -u root -it jenkins bash```
 2. ```apt-get update && apt-get install -y maven```
-3. exit out of shell
-4. Create a new freestyle project called owaspmaven
-5. Add source control git pointed to https://github.com/BillDinger/ContinuousSecurity
-6. Check the box under 'build environment' that says delete the workspace before build starts.
-   Under 'build' select 'execute shell command' and type in the box 'cd java'
-7. Under 'build' select 'Invoke Top Level Maven Targets'
-8. Expand the box and enter ```clean compile -P analysis```
+3. exit out of shell - type ```exit```
+4. Go to jenkins in your browser http://localhost:8080/ 
+5. Select new Item & then freestyle project called owaspmaven
+6. Under 'source code management' select 'git' and set repository url to https://github.com/BillDinger/ContinuousSecurity
+7. Check the box under 'build environment' that says delete the workspace before build starts.
+8. Under 'build' select 'add build step' and then select 'Invoke Top Level Maven Targets'
+9. Expand the box and enter ```clean compile -P analysis```
+10. click 'advanced' and then under 'POM' enter 'java/pom.xml'
+11. click save & then 'build now' , verify build is succesful.
 
 
-### Maven Dependency Check Setup 
+### Jenkins Maven Dependency Check Plugin Setup 
 
-Prereq: Complete Initial Jenkins Setup & Maven Jenkins Setup
+Prereq: Complete Jenkins Setup & Jenkins Maven Setup
 
 1. Go to http://localhost:8080/pluginManager/
 2. Install OWASP Dependency-Check Plugin & restart jenkins
-3. Go to your owaspmaven project and select add a build step and then dependency check
+3. Go to your owaspmaven project (http://localhost:8080/job/owaspmaven/configure) and select add a build step and then dependency check
 4. in the box for directories to scan type in ```/*java/*.jar```
 5. Select Add Post Build Options & 'publish dependency-check results'
 6. In the dependency check results enter ```**/dependency-check-report.xml```
 
-### Maven OWASP Zap Setup.
+### Jenkins OWASP Zap Setup.
 Prereq: Complete initial jenkins setup & maven jenkins setup.
 
-1.
+1. ```docker exec -u root -it jenkins bash```
+2. ```apt-get update && apt-get install -y docker```
+3. Go to jenkins in your browser http://localhost:8080/ 
 
 ### Owasp ZAP Standalone scan
 1. docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options "-config api.disablekey=true" http://exampe/url/to/hit
+
+## Dotnet Setup
+Note: the dotnet solution is a shim website design to just show how a scan can be done. It by default is designed to be
+installed locally on port 80, although of course you can alter this if you choose.
+
+### Website setup.
+1. Open up solution in visual studio.
+2. Publish solution to \wwwroot\owasplocaldev
+3. Create an IIS Site pointed to \wwwroot\owasplocaldev & create an application pool with 'no managed code'
+4. Install URL Rewrite module into your IIS using web platform installer if you haven't alreayd.
+5. https://download.visualstudio.microsoft.com/download/pr/5ee633f2-bf6d-49bd-8fb6-80c861c36d54/caa93641707e1fd5b8273ada22009246/dotnet-hosting-2.2.1-win.exe install dotnet hosting 2.2.1
+6. Add a host file entry for localdev.owasp.com to 127.0.0.1
+7 add IIS binding for localdev.owasp.com for port 80.
