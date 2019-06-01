@@ -78,7 +78,6 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -115,7 +114,6 @@ target
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -426,3 +424,12 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# PHP composer files
+php/vendor/
+
+# OWASP dependency check CLI settings
+cli/data/
+
+# dependency-check-report
+dependency-check-report.html

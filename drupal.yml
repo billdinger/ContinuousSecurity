@@ -1,0 +1,38 @@
+# Taken from the official documentation (https://docs.docker.com/samples/library/drupal/ ) and 
+# slightly modified to run on port 8083
+#
+# Drupal with PostgreSQL
+#
+# Access via "http://localhost:8083"
+#   (or "http://$(docker-machine ip):8083" if using docker-machine)
+#
+# During initial Drupal setup,
+# Database type: PostgreSQL
+# Database name: postgres
+# Database username: postgres
+# Database password: example
+# ADVANCED OPTIONS; Database host: postgres
+
+version: '3.1'
+
+services:
+
+  drupal:
+    image: drupal:8.7.2-apache
+    ports:
+      - 8083:80
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles
+      - /var/www/html/themes
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - /var/www/html/sites
+    restart: always
+
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: example
+    restart: always

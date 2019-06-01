@@ -1,6 +1,6 @@
 # ContinuousSecurity
 
-Describes how to setup a local docker environment to use jenkins & owasp tooling for the talk.
+Describes how to setup a local docker environment to use jenkins & owasp tooling for the talk. Demos below are organized around PHP (drupal), Maven, Jenkins, and IIS/.NET.
 
 ## Demos
 
@@ -47,6 +47,18 @@ Prereq: Complete Jenkins Setup & Jenkins Maven Setup
 5. Select Add Post Build Options & 'publish dependency-check results'
 6. In the dependency check results enter ```**/dependency-check-report.xml```
 
+### Jenkins PHP Dependency Check Setup
+Prereq: Complete Jenkins Setup & maven setup (the CLI scanner requires a JRE)
+
+1. Go to jenkins in your browser http://localhost:8080/ 
+2. Select new Item & then freestyle project called owaspphp
+3. Under 'source code management' select 'git' and set repository url to https://github.com/BillDinger/ContinuousSecurity
+4. Check the box under 'build environment' that says delete the workspace before build starts.
+5. Under 'build' select 'add build step' and then select 'Execute Shell'
+6. Expand the box and enter ```.\${WORKSPACE}\cli\bin\dependency-check.sh  --project php  --out ${WORKSPACE} --scan ${WORKSPACE}\php -l ${WORKSPACE}\out.log --enableExperimental```
+    This command will scan the directory `php`, output the log file & report in the root of the jenkins workspace. The
+    `enableExperimental` flag is necessary 
+
 ### Jenkins OWASP Zap Setup.
 Prereq: Complete initial jenkins setup & maven jenkins setup.
 
@@ -61,7 +73,7 @@ Prereq: Complete initial jenkins setup & maven jenkins setup.
 Note: the dotnet solution is a shim website design to just show how a scan can be done. It by default is designed to be
 installed locally on port 80, although of course you can alter this if you choose.
 
-### Website setup.
+### Dotnet Website setup.
 1. Open up solution in visual studio.
 2. Publish solution to \wwwroot\owasplocaldev
 3. Create an IIS Site pointed to \wwwroot\owasplocaldev & create an application pool with 'no managed code'
@@ -69,3 +81,23 @@ installed locally on port 80, although of course you can alter this if you choos
 5. https://download.visualstudio.microsoft.com/download/pr/5ee633f2-bf6d-49bd-8fb6-80c861c36d54/caa93641707e1fd5b8273ada22009246/dotnet-hosting-2.2.1-win.exe install dotnet hosting 2.2.1
 6. Add a host file entry for localdev.owasp.com to 127.0.0.1
 7 add IIS binding for localdev.owasp.com for port 80.
+
+## PHP Setup
+
+### PHP CLI Example
+
+1. execute the following command `dependency-check.bat  --project test  --out {PATH_TO_REPO} --scan {PATH_TO_REPO}\php -l {PATH_TO_REPO}\out.log --enableExperimental` replacing the `{PATH_TO_REPO}` with the location where you cloned this repo.
+2. the report can be viewed by opening the generated `dependency-check.html` in the root directory.
+
+### Drupal Setup
+1. Start drupal by doing `docker-compose -f drupal.yml up` 
+2. browse to https://localhost:8083
+3. select English
+4. Select umami profile 
+5. for Database options enter:
+    Database type: PostgreSQL
+    Database name: postgres
+    Database username: postgres
+    Database password: example
+    ADVANCED OPTIONS; Database host: postgres
+6. Enter whatever email, username/password you want.

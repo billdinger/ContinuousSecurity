@@ -1,0 +1,16 @@
+{
+    "name": "bdinger/owaspdependencycheck",
+    "description": "A demo of the OWASP dependency check CLI tool",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bill Dinger",
+            "email": "bill.dinger@vml.com"
+        }
+    ],
+    "require": {
+        "drush/drush": "^9.6",
+        "ext-gd": "*"
+    }
+}
