@@ -55,7 +55,7 @@ Prereq: Complete Jenkins Setup & maven setup (the CLI scanner requires a JRE)
 3. Under 'source code management' select 'git' and set repository url to https://github.com/BillDinger/ContinuousSecurity
 4. Check the box under 'build environment' that says delete the workspace before build starts.
 5. Under 'build' select 'add build step' and then select 'Execute Shell'
-6. Expand the box and enter ```.\${WORKSPACE}\cli\bin\dependency-check.sh  --project php  --out ${WORKSPACE} --scan ${WORKSPACE}\php -l ${WORKSPACE}\out.log --enableExperimental```
+6. Expand the box and enter ```${WORKSPACE}/cli/bin/dependency-check.sh  --project php  --out ${WORKSPACE} --scan ${WORKSPACE}/php -l ${WORKSPACE}/out.log --enableExperimental```
     This command will scan the directory `php`, output the log file & report in the root of the jenkins workspace. The
     `enableExperimental` flag is necessary 
 
