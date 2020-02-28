@@ -79,7 +79,7 @@
         <plugin>
           <groupId>org.owasp</groupId>
           <artifactId>dependency-check-maven</artifactId>
-          <version>3.3.2</version>
+          <version>5.3.0</version>
           <configuration>
             <cveValidForHours>6</cveValidForHours>
             <failBuildOnCVSS>4</failBuildOnCVSS>
@@ -90,7 +90,7 @@
               <goals>
                 <goal>check</goal>
               </goals>
-                <phase>validate</phase>
+              <phase>validate</phase>
             </execution>
           </executions>
         </plugin>

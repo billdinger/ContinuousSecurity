@@ -433,3 +433,6 @@ cli/data/
 
 # dependency-check-report
 dependency-check-report.html
+owaspdata/**
+php/owaspdata/
+dotnet/owaspdata/

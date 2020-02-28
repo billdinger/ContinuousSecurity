@@ -22,7 +22,7 @@ services:
    networks:
      - owasp
   jenkins:
-    container_name: jenkins
+    container_name: jenkinsowasp
     image: jenkins/jenkins:lts
     ports:
      - "50000:50000"
@@ -32,7 +32,7 @@ services:
     depends_on:
       - owaspzapapi
   sonarqube:
-    container_name: sonarqube
+    container_name: sonarqubeowasp
     image: sonarqube:lts
     ports: 
       - "9000:9000"

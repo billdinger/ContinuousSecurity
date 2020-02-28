@@ -1,11 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+  
+    <Target Name="OWASPDepdendencyCheck" AfterTargets="Build">
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+    <!-- Executes the OWASP Command Line Checker 
+        For additional information and command line options see
+        https://owasp.org/www-project-dependency-check/ and for CLI
+        options see https://jeremylong.github.io/DependencyCheck/dependency-check-cli/arguments.html
+        -->
+        <!-- This is the *nix version of the command line checker -->
+        <Exec Condition="'$(OS)' == 'Unix'" Command="cd ../../../ %3B cli/bin/dependency-check.sh --project $(ProjectName)   --scan $(TargetDir)  --cveValidForHours 24 --failOnCVSS 4 --data owaspdata --suppression $(ProjectDir)suppression.xml" />
+        <!-- This is the windows version of the command line checker -->
+        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="cd ..\..\..\ %3B cli/bin/dependency-check.bat --project $(ProjectName)   --scan $(TargetDir)  --cveValidForHours 24 --failOnCVSS 4 --data owaspdata --suppression $(ProjectDir)suppression.xml" />
 
+    </Target>
 </Project>
