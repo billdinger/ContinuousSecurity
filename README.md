@@ -105,3 +105,7 @@ Just a standard drupal site for use in proof of concept testing the OWASP zap sc
     Database password: example
     ADVANCED OPTIONS; Database host: postgres
 6. Enter whatever email, username/password you want.
+
+### Mozilla Observatory Setup
+
+For latest you can check [the official website](https://github.com/mozilla/observatory-cli)
