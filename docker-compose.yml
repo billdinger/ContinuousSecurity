@@ -4,15 +4,15 @@ networks:
  owasp:
    driver: bridge
 services:
-  # owaspzap:
-  #  container_name: owaspgui
-  #  command: zap-webswing.sh -host 0.0.0.0 -port 8091 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
-  #  image: owasp/zap2docker-stable
-  #  ports:
-  #   - "8091:8091"
-  #  networks:
-  #    - owasp
-  #  user: zap
+  owaspzap:
+   container_name: owaspgui
+   command: zap-webswing.sh -host 0.0.0.0 -port 8091 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+   image: owasp/zap2docker-stable
+   ports:
+    - "8091:8091"
+   networks:
+     - owasp
+   user: zap
   owaspzapapi:
    container_name: owaspapi
    command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
